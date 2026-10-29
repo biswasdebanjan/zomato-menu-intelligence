@@ -400,7 +400,7 @@ It brings together:
 
 The dashboard is designed to move from **portfolio-level signals to specific opportunities**.
 
-<img src="images/01_menu_portfolio.jpg" alt="Menu Intelligence and Portfolio Strategy dashboard" width="100%">
+![Menu Intelligence and Portfolio Strategy dashboard](images/02_menu_portfolio.jpg)
 
 ### 03 — Executive Action Plan
 
