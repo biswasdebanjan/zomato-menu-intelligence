@@ -1,196 +1,312 @@
-<div align="center">
-
 # Zomato Menu Intelligence & Portfolio Strategy
-
-**Power BI · Menu Intelligence · Pricing Strategy · Customer Engagement · Portfolio Management**
 
 <img src="images/00_title_card.png" alt="Zomato Menu Intelligence & Portfolio Strategy" width="100%">
 
-[**Live Power BI Dashboard**](https://app.powerbi.com/view?r=eyJrIjoiNjRkZTAwNzQtMGNkNi00NTFjLTg1YjEtOGI3NWZlMmEzZDcxIiwidCI6ImM2ZTU0OWIzLTVmNDUtNDAzMi1hYWU5LWQ0MjQ0ZGM1YjJjNCJ9) · [**Dataset Source**](https://www.kaggle.com/datasets/narsingraogoud/zomato-restaurants-dataset-for-metropolitan-areas)
-
-</div>
-
----
-
-## ■ Project at a Glance
-
-This project treats the Zomato menu as a **product portfolio**, not simply as a collection of restaurant listings. The analysis connects **pricing position, customer engagement and product popularity** to identify which menu items should be scaled, premiumized, optimized or rationalized.
-
-| Metric | Current dashboard value |
-|---|---:|
-| Restaurants | **914** |
-| Menu Items | **54.96K** |
-| Average Dining Rating | **3.82** |
-| Average Delivery Rating | **3.96** |
-| Average Menu Price | **₹241** |
-| Premium Winners | **1.87K** |
-| Dormant Portfolio Share | **71.72%** |
-
-The project is built to demonstrate **technical Power BI execution, structured analytical reasoning and business decision-making** in one end-to-end workflow.
-
-> **Refresh note:** The dashboard and repository were updated after correcting the Value Price Tier boundary to **≤ ₹300**. The current figures shown above reflect the refreshed PBIX.
+<p align="center">
+  <a href="https://app.powerbi.com/view?r=eyJrIjoiNjRkZTAwNzQtMGNkNi00NTFjLTg1YjEtOGI3NWZlMmEzZDcxIiwidCI6ImM2ZTU0OWIzLTVmNDUtNDAzMi1hYWU5LWQ0MjQ0ZGM1YjJjNCJ9"><strong>Live Power BI Dashboard</strong></a>
+</p>
 
 ---
 
-## 03 — Data at a Glance
+## 01 — The Project
+
+This project analyses Zomato menu-item data to understand how **price positioning, customer engagement, product popularity, restaurant performance, cuisine mix, and city-level demand** combine to shape menu portfolio performance.
+
+The objective was not to build another restaurant-rating dashboard.
+
+The analysis was designed to answer a more commercial question:
+
+> **Which parts of a menu portfolio create meaningful customer engagement, which products are underperforming, where does premium demand already exist, and where should management scale, optimize, premiumize, or rationalize the portfolio?**
+
+The analytical chain is:
+
+```text
+Menu-Item Data
+      ↓
+Price Positioning
+      ↓
+Customer Engagement
+      ↓
+Popularity Segmentation
+      ↓
+Product Strategy
+      ↓
+Cuisine / Restaurant / City Intelligence
+      ↓
+Portfolio Opportunity
+      ↓
+Business Action
+```
+
+The resulting dashboard therefore moves from **descriptive menu reporting to portfolio-level decision support**.
+
+---
+
+## 02 — Data at a Glance
 
 | Attribute | Detail |
 |---|---|
-| **Source** | Kaggle — *Zomato Restaurants Dataset for Metropolitan Areas* |
+| **Source** | Kaggle — Zomato Restaurants Dataset for Metropolitan Areas |
 | **Publisher** | Narsing Rao Goud |
-| **Source size** | **123,657 rows × 12 columns** |
-| **Geographic coverage** | **13 Indian metropolitan areas** |
-| **Data grain** | **Menu-item / restaurant-level records** |
-| **Primary analytical table** | `zomato` |
-| **Core entities** | Restaurants, menu items, cuisines, cities, ratings, votes, prices |
-| **Analytical platform** | Microsoft Power BI |
-| **Report canvas** | 1280 × 720 |
-| **Primary segmentation** | Price Tier + Popularity Segment → Product Strategy Segment |
+| **Dataset Size** | **123,657 rows × 12 columns** |
+| **Geographic Scope** | **13 Indian metropolitan areas** |
+| **Data Grain** | Menu-item / restaurant-level records |
+| **Core Entities** | Restaurants, menu items, cuisines, cities, pricing, customer votes |
+| **Primary Platform** | Microsoft Power BI |
+| **Analysis Focus** | Menu pricing, customer engagement, popularity, portfolio strategy |
 
-The source is a **menu-item / restaurant-level dataset** containing restaurant identity, dining and delivery ratings, votes, cuisine, location, menu-item, best-seller status and menu price. The analysis uses these attributes to evaluate customer engagement, pricing position and portfolio productivity.
+**Dataset source:**  
+https://www.kaggle.com/datasets/narsingraogoud/zomato-restaurants-dataset-for-metropolitan-areas
 
-The raw source dataset is not redistributed in this repository.
+The source data contains restaurant, menu-item, cuisine, location, pricing, ratings, and voting information. The analysis uses these fields to move from individual menu-item observations to portfolio-level patterns.
 
-**Source:** https://www.kaggle.com/datasets/narsingraogoud/zomato-restaurants-dataset-for-metropolitan-areas
-
----
-
-## ■ The Business Problem
-
-A large menu does not automatically create a strong menu portfolio. Restaurants and marketplace operators need to understand:
-
-- Which products generate meaningful customer engagement?
-- How does price positioning relate to demand?
-- Which products succeed because of volume versus premium positioning?
-- Which expensive products receive little customer engagement?
-- Which cuisines, restaurants and cities provide useful benchmarks?
-- Where should the portfolio be expanded, optimized or rationalized?
-
-The project therefore moves beyond descriptive reporting toward a **portfolio-management framework**.
+The raw source dataset is **not redistributed in this repository**.
 
 ---
 
-## ■ Analytical Identity
+## 03 — Business Questions
 
-The core analytical chain is:
+The analysis was designed around decision-oriented questions rather than individual dashboard visuals.
 
-> **Price Positioning + Customer Engagement → Product Strategy → Restaurant / Cuisine / City Intelligence → Portfolio Action**
+- Which menu items generate the strongest customer engagement?
+- How does menu pricing relate to customer demand and popularity?
+- Which products successfully combine higher pricing with strong engagement?
+- How large is the dormant portion of the menu portfolio?
+- Which products should be scaled, optimized, premiumized, or rationalized?
+- Which cuisines show the strongest premium opportunity?
+- Which cities demonstrate stronger customer engagement and restaurant efficiency?
+- Which restaurants provide useful benchmarks for menu and service performance?
+- Should menu strategy be standardized nationally or adapted to local market behavior?
+- How can the portfolio be managed continuously rather than through one-time menu expansion or cleanup?
 
-The central idea is to evaluate each menu item through two lenses:
-
-1. **Price Tier** — where the product sits in the pricing landscape.
-2. **Popularity Segment** — how strongly customers engage with the product through votes.
-
-Those dimensions are then combined into a third layer:
-
-### Price Tier × Popularity Segment → Product Strategy Segment
-
-| Product Strategy | Logic | Strategic interpretation |
-|---|---|---|
-| **Volume Drivers** | Budget / Value + Popular / High-Performing / Signature | Scale and protect proven demand |
-| **Premium Winners** | Premium / Luxury + Popular / High-Performing / Signature | Strengthen premium positioning and profitability |
-| **Dormant Premium** | Premium / Luxury + Dormant / Niche | Reposition, reprice or discontinue |
-| **Dormant Core** | Budget / Value + Dormant / Niche | Rationalize and simplify |
-
-This framework is the **central analytical contribution** of the project. It converts raw menu-level attributes into strategic product roles.
+The questions deliberately move from **product-level behavior to portfolio-level decisions**.
 
 ---
 
-## ■ What the Analysis Found
+## 04 — Analytical Thinking Behind the Project
 
-### 1. The portfolio has a substantial dormant tail
+This project was deliberately built as an analytical workflow rather than a collection of Power BI visuals.
 
-**71.72% of menu items are represented in the dormant portfolio view.** That shifts the management question from simply finding popular products to understanding whether the long tail is creating value or unnecessary portfolio complexity.
+```text
+Business Question
+      ↓
+Understand the Menu-Item Data
+      ↓
+Prepare & Validate the Data
+      ↓
+Establish Price Positioning
+      ↓
+Measure Customer Engagement
+      ↓
+Create Popularity Segments
+      ↓
+Build Product Strategy Segments
+      ↓
+Analyse Cuisine / Restaurant / City Patterns
+      ↓
+Identify Portfolio Opportunities
+      ↓
+Translate Evidence into Business Action
+```
 
-### 2. Volume Drivers are the strongest engagement engine
+The key principle was to avoid evaluating a menu item through a single metric.
 
-The main dashboard shows approximately **2.50M customer votes** associated with Volume Drivers, compared with approximately **332K** for Premium Winners. This supports a dual growth logic: protect affordable high-demand products while selectively developing premium winners.
+A high-priced product is not automatically a premium success.
 
-### 3. Premium success is concentrated
+A highly voted product is not automatically commercially attractive.
 
-The report identifies **1.87K Premium Winners**. At the cuisine level, Beverages leads the Premium Winner view with **753** products, reinforcing that premiumization should be selective rather than universal.
+A highly rated restaurant is not automatically a strong portfolio benchmark.
 
-### 4. Market performance is not uniform
+The analysis therefore combines **price position + customer engagement + product strategy + market context** before arriving at a recommendation.
 
-Hyderabad leads the displayed customer-engagement ranking at approximately **803K votes** and also leads the restaurant engagement-efficiency view at approximately **6.2K votes per restaurant**. This supports city-specific portfolio planning rather than a single national strategy.
-
-### 5. Portfolio productivity matters more than menu size
-
-The project deliberately avoids treating assortment size as the objective. High-performing products and restaurants are used as benchmarks for focused menus, stronger engagement and more disciplined portfolio management.
+> A dashboard can show which products are popular. An analyst should be able to explain **where demand exists, how that demand relates to price, which parts of the portfolio create value, where inefficiency is concentrated, and what the business should do next.**
 
 ---
 
-## ■ Analytical Framework
+## 05 — Analytical Framework
+
+The analytical framework is built in a deliberate three-layer sequence:
+
+**Price Tier → Popularity Segment → Product Strategy**
+
+The first two dimensions describe the product. The third converts those descriptions into an actionable strategic classification.
 
 ### Layer 1 — Price Tier
 
-The business-facing framework uses four pricing tiers:
+Price tiers classify menu items according to their menu-price position.
 
-| Tier | Business definition |
-|---|---:|
-| Budget | ≤ ₹150 |
-| Value | ₹151–300 |
-| Premium | ₹301–500 |
-| Luxury | > ₹500 |
+| Tier | Business Definition | Strategic Interpretation |
+|---|---:|---|
+| **Budget** | ≤ ₹150 | Accessible / volume-oriented |
+| **Value** | ₹151–299 | Mainstream portfolio / broader reach |
+| **Premium** | ₹300–500 | Higher-value positioning |
+| **Luxury** | > ₹500 | Highest price positioning |
+
+The purpose of the price framework is not simply to label products as cheap or expensive.
+
+It creates a consistent way to ask:
+
+> **Does customer demand justify the product's position in the pricing landscape?**
+
+---
 
 ### Layer 2 — Popularity Segment
 
-Popularity is classified using menu-item vote volume:
+Popularity is classified using menu-item vote volume.
 
 | Segment | Votes | Interpretation |
 |---|---:|---|
-| Dormant Products | 0 | No customer traction |
-| Niche Products | 1–15 | Low but existing interest |
-| Popular Products | 16–50 | Growing acceptance |
-| High-Performing Products | 51–100 | Strong customer approval |
-| Signature Products | 101+ | Highest engagement |
+| **Dormant Products** | 0 | No recorded customer traction |
+| **Niche Products** | 1–15 | Low but existing interest |
+| **Popular Products** | 16–50 | Growing acceptance |
+| **High-Performing Products** | 51–100 | Strong customer approval |
+| **Signature Products** | 101+ | Highest observed engagement |
+
+These thresholds were designed to create interpretable demand bands rather than treating every vote count as an isolated number.
+
+The segmentation allows the analysis to distinguish between:
+
+- no observed engagement,
+- early-stage interest,
+- established demand,
+- strong demand,
+- and standout customer favorites.
+
+---
 
 ### Layer 3 — Product Strategy
 
-The two dimensions above are combined through row-level DAX logic to create four actionable portfolio groups. This is what transforms a descriptive menu dataset into a strategic product portfolio framework.
+Price Tier and Popularity Segment are then combined through row-level DAX logic to create an actionable portfolio classification.
+
+| Product Strategy | Logic | Strategic Interpretation |
+|---|---|---|
+| **Volume Drivers** | Budget / Value + Popular / High-Performing / Signature | Scale and protect proven demand |
+| **Premium Winners** | Premium / Luxury + Popular / High-Performing / Signature | Strengthen premium positioning |
+| **Dormant Premium** | Premium / Luxury + Dormant / Niche | Reposition, reprice, or discontinue |
+| **Dormant Core** | Budget / Value + Dormant / Niche | Rationalize and simplify |
+
+This is the central analytical transformation of the project:
+
+```text
+Price Tier
+     +
+Popularity Segment
+     ↓
+Product Strategy Segment
+     ↓
+Portfolio Decision
+```
+
+The framework transforms a descriptive menu dataset into a **decision-oriented portfolio model**.
 
 ---
 
-## ■ Technical Architecture
+## 06 — Technical Architecture
 
-### Power Query
+### Technology Stack
 
-The source CSV was intentionally retained close to its original structure. Power Query was used for:
+- **Power BI** — analytical modeling, DAX, interactive analysis and dashboard development
+- **Power Query** — source preparation and data transformation
+- **DAX** — KPIs, portfolio metrics and segmentation logic
+- **Git / GitHub** — version control, documentation and portfolio publication
 
-- Source ingestion
-- Header promotion
-- Data-type standardization
+### Analytical Model
 
-No complex merge, append, grouping, pivoting or extensive row-level transformation was required.
+The Power BI solution is centered on the Zomato menu-item dataset and uses calculated analytical logic to create the segmentation framework.
 
-### Data Model
+The most important distinction is between:
 
-The report uses a **single analytical table: `zomato`**.
+**Report-facing measures**  
+used to produce KPIs, charts and portfolio metrics
 
-There are no fact/dimension relationships or multi-table analytical joins. The source already contains the restaurant, cuisine, location, menu-item, rating, votes and pricing attributes required for the analysis.
+and
 
-Dedicated measure tables organize the DAX layer; they are **measure containers, not analytical tables participating in relationships**.
+**Analytical segmentation logic**  
+used to classify menu items before the business analysis is performed.
 
-### DAX
-
-The project uses calculated columns for the three-level segmentation framework and measures to quantify the resulting portfolio.
-
-Representative strategic measures include:
-
-- `Premium Winners Count`
-- `Premium Winner Share %`
-- `Volume Drivers`
-- `Dormant Premium Count`
-- `Dormant Product %`
-- `Engagement per Restaurant`
-
-The documentation intentionally focuses on DAX that demonstrates **segmentation, filter context, portfolio composition and normalized engagement**, rather than listing every basic aggregation measure.
+The percentile/distribution calculation measures used during segmentation are supporting analytical machinery. They are intentionally not presented as headline dashboard measures because their role is to establish analytical thresholds rather than directly drive report visuals.
 
 ---
 
-## ■ Representative DAX
+### Core DAX Segmentation Logic
 
-### Premium Winner Share %
+#### Price Tier
+
+```DAX
+Price Tier =
+SWITCH(
+    TRUE(),
+    Zomato[Prices] <= 150, "Budget",
+    Zomato[Prices] <= 299, "Value",
+    Zomato[Prices] <= 500, "Premium",
+    "Luxury"
+)
+```
+
+#### Popularity Segment
+
+```DAX
+Popularity Segment =
+SWITCH(
+    TRUE(),
+    Zomato[Votes] = 0, "Dormant Products",
+    Zomato[Votes] <= 15, "Niche Products",
+    Zomato[Votes] <= 50, "Popular Products",
+    Zomato[Votes] <= 100, "High-Performing Products",
+    "Signature Products"
+)
+```
+
+#### Product Strategy Segment
+
+```DAX
+Product Strategy Segment =
+SWITCH(
+    TRUE(),
+
+    Zomato[Price Tier] IN {"Budget","Value"} &&
+    Zomato[Popularity Segment] IN {
+        "Popular Products",
+        "High-Performing Products",
+        "Signature Products"
+    },
+    "Volume Drivers",
+
+    Zomato[Price Tier] IN {"Premium","Luxury"} &&
+    Zomato[Popularity Segment] IN {
+        "Popular Products",
+        "High-Performing Products",
+        "Signature Products"
+    },
+    "Premium Winners",
+
+    Zomato[Price Tier] IN {"Premium","Luxury"} &&
+    Zomato[Popularity Segment] IN {
+        "Dormant Products",
+        "Niche Products"
+    },
+    "Dormant Premium",
+
+    Zomato[Price Tier] IN {"Budget","Value"} &&
+    Zomato[Popularity Segment] IN {
+        "Dormant Products",
+        "Niche Products"
+    },
+    "Dormant Core"
+)
+```
+
+The significance of this logic is not the syntax itself. It is the **business translation encoded into the model**.
+
+The calculated columns establish a repeatable classification system that can then be used consistently across portfolio, cuisine, city, restaurant and pricing analysis.
+
+---
+
+### Selected Analytical Measures
+
+Only the measures that materially support the analytical story are highlighted here.
+
+#### Premium Winner Share
 
 ```DAX
 Premium Winner Share % =
@@ -201,7 +317,19 @@ DIVIDE(
 )
 ```
 
-### Volume Drivers
+This converts Premium Winner volume into a portfolio-level share.
+
+#### Premium Winners Count
+
+```DAX
+Premium Winners Count =
+CALCULATE(
+    DISTINCTCOUNT(Zomato[Item Name]),
+    Zomato[Product Strategy Segment] = "Premium Winners"
+)
+```
+
+#### Volume Drivers
 
 ```DAX
 Volume Drivers =
@@ -211,7 +339,7 @@ CALCULATE(
 )
 ```
 
-### Dormant Premium Count
+#### Dormant Premium Count
 
 ```DAX
 Dormant Premium Count =
@@ -221,7 +349,7 @@ CALCULATE(
 )
 ```
 
-### Dormant Product %
+#### Dormant Product Share
 
 ```DAX
 Dormant Product % =
@@ -234,105 +362,269 @@ DIVIDE(
 )
 ```
 
-### Engagement per Restaurant
-
-```DAX
-Engagement per Restaurant =
-DIVIDE(
-    [Total Votes],
-    [Total Restaurants],
-    0
-)
-```
-
-The complete segmentation logic and selected analytical measures are documented in [`docs/dax_logic.md`](docs/dax_logic.md).
+The project deliberately does **not** document every basic aggregation measure. The focus is on the logic that demonstrates analytical design rather than simply proving that Power BI can calculate an average or a count.
 
 ---
 
-## ■ Report Architecture
+## 07 — Report Architecture
 
-The Power BI report contains four primary business-facing pages:
+The Power BI report is organized into four report experiences.
 
-| Page | Purpose |
-|---|---|
-| **Project Hub** | Business context, objectives and report navigation |
-| **Menu & Portfolio** | Main analytical dashboard across pricing, engagement, cuisine, city and restaurant performance |
-| **Actions** | Executive recommendations and strategic priorities |
-| **Segments** | Segmentation methodology, thresholds and business definitions |
+### 01 — Project Hub
 
-Additional tooltip pages support the interactive report experience.
+The landing page establishes:
 
-The README intentionally showcases **only the main analytical dashboard**. The complete visual report is preserved under [`images/`](images/), while the full dashboard export is available under [`deliverables/`](deliverables/).
+- Project purpose
+- Business objectives
+- Dashboard structure
+- Analytical scope
+- Strategic impact areas
 
----
+It gives the stakeholder context before entering the analytical pages.
 
-## ■ Dashboard Preview
+### 02 — Menu Intelligence & Portfolio Strategy
 
-### Main Analytical Dashboard
+This is the **primary analytical dashboard** and the main page showcased in this repository.
 
-<img src="images/02_menu_portfolio.jpg" alt="Zomato Menu Intelligence and Portfolio Strategy dashboard" width="100%">
+It brings together:
 
-The main page combines KPI monitoring with city performance, cuisine opportunity, premium optimization, product-strategy mix, customer engagement, restaurant benchmarking and price-tier analysis.
+- Portfolio KPIs
+- City performance
+- Cuisine opportunity
+- Product Strategy mix
+- Customer engagement
+- Premium Winner concentration
+- Restaurant benchmarks
+- City-level engagement
+- Price-tier behavior
 
-### Supporting Pages
+The dashboard is designed to move from **portfolio-level signals to specific opportunities**.
 
-- [`Project Hub`](images/01_project_hub.jpg)
-- [`Executive Action Plan`](images/03_executive_action_plan.jpg)
-- [`Segmentation Framework & Business Definitions`](images/04_segmentation_framework.jpg)
+<img src="images/01_menu_portfolio.jpg" alt="Menu Intelligence and Portfolio Strategy dashboard" width="100%">
 
-The repository also contains the full dashboard PDF in [`deliverables/dashboard_export.pdf`](deliverables/dashboard_export.pdf).
+### 03 — Executive Action Plan
 
----
+The recommendations page translates the analytical findings into ten strategic actions covering:
 
-## ■ From Analysis to Business Action
+- Growth and investment
+- Portfolio optimization
+- Market expansion
+- Operational excellence
 
-The analysis is translated into ten strategic decision areas:
+The detailed recommendation document is available in the `deliverables` folder.
 
-1. **Scale proven menu winners** rather than expanding the entire portfolio indiscriminately.
-2. **Use a dual growth strategy** built around Volume Drivers and Premium Winners.
-3. **Use Hyderabad as an innovation and launch market** based on observed engagement and efficiency performance.
-4. **Rationalize Dormant Core and Dormant Premium products** to reduce portfolio complexity.
-5. **Build menus around demonstrated customer demand** rather than assortment size.
-6. **Replace uniform national strategies with city-specific portfolio planning.**
-7. **Expand premium selectively** where customer demand and willingness to pay are already visible.
-8. **Use high-performing local restaurant partners as operational benchmarks.**
-9. **Protect dining and delivery service quality** as a customer-experience lever.
-10. **Turn the segmentation framework into a continuous portfolio-management process.**
+### 04 — Segmentation Framework & Business Definitions
 
-The complete evidence-to-recommendation logic is documented in [`docs/executive_recommendations.md`](docs/executive_recommendations.md), with the original report preserved in [`deliverables/executive_action_plan.pdf`](deliverables/executive_action_plan.pdf).
+This page acts as a stakeholder reference for:
 
----
+- Price Tier definitions
+- Popularity Segment definitions
+- Product Strategy logic
+- Strategic interpretation of each segment
 
-## ■ Analyst Mindset Behind the Project
-
-The project is structured around a decision-oriented sequence:
-
-**Business Question → Data → Preparation → Analytical Framework → Evidence → Interpretation → Decision**
-
-The dashboard is therefore designed to answer more than *what happened*:
-
-- **Where is the opportunity?**
-- **What customer signal supports it?**
-- **Which products or markets deserve investment?**
-- **What should be scaled, optimized or removed?**
-- **How can the framework be reused for continuous portfolio management?**
-
-That is the main distinction between this project and a conventional restaurant dashboard.
+It makes the analytical framework transparent rather than leaving the segmentation logic hidden inside the model.
 
 ---
 
-## ■ Repository Structure
+## 08 — What the Analysis Found
+
+The analysis produced several portfolio-level signals that materially shaped the recommendations.
+
+### Portfolio Scale
+
+The dashboard covers:
+
+- **914 restaurants**
+- **54.96K menu items**
+- **3.82 average dining rating**
+- **3.96 average delivery rating**
+- **₹241 average menu price**
+- **1.87K Premium Winners**
+- **71.72% dormant portfolio share**
+
+The most important signal is not the size of the menu.
+
+It is the **concentration of customer engagement within a relatively small portion of the portfolio**.
+
+---
+
+### 01 — Proven Demand Is Concentrated
+
+The Product Strategy analysis shows that **Volume Drivers** generate the largest customer-engagement pool, followed by Premium Winners.
+
+The latest dashboard records approximately:
+
+- **2.50M engagement** for Volume Drivers
+- **332K engagement** for Premium Winners
+- **172K engagement** for Dormant Core
+- **43K engagement** for Dormant Premium
+
+This creates two distinct growth engines:
+
+**Volume Drivers** provide reach and established demand.
+
+**Premium Winners** demonstrate that higher-priced products can succeed when customer engagement already exists.
+
+The strategic implication is that growth should not depend on expanding the entire menu uniformly.
+
+---
+
+### 02 — The Dormant Portfolio Is the Largest Structural Opportunity
+
+**71.72% of menu items fall into the dormant portfolio based on the project's popularity definition.**
+
+This does not automatically mean every dormant item should be removed.
+
+It does indicate that a substantial proportion of the menu has little or no recorded customer engagement and therefore deserves review.
+
+The appropriate response is to:
+
+- identify items worth redesigning,
+- reprice products where positioning is weak,
+- replace low-productivity items with proven alternatives,
+- and simplify menus where assortment creates complexity without demand.
+
+---
+
+### 03 — Premium Demand Exists, But It Is Selective
+
+Premium and Luxury products should not be treated as a universal growth opportunity.
+
+The Product Strategy framework identifies **Premium Winners** specifically where higher price positioning is combined with established customer engagement.
+
+The analysis therefore supports **selective premiumization** rather than blanket premium expansion.
+
+The strongest premium opportunity should be pursued where:
+
+**higher pricing + customer demand + market context**
+
+already align.
+
+---
+
+### 04 — Cuisine Opportunity Is Uneven
+
+The cuisine analysis shows meaningful differences in customer engagement and premium opportunity.
+
+The dashboard identifies **Beverages, Desserts, Fast Food, Pizza and Sichuan** among the cuisines requiring closer premium-optimization attention.
+
+Beverages also lead the Premium Winner leaderboard in the current report.
+
+This suggests that premium strategy should be **category-specific**, rather than applied equally across the entire menu portfolio.
+
+---
+
+### 05 — City-Level Demand Is Not Uniform
+
+Hyderabad stands out strongly in the current dashboard.
+
+Customer engagement is approximately:
+
+- **Hyderabad — 803K**
+- **Jaipur — 433K**
+- **Bangalore — 282K**
+- **Kolkata — 277K**
+- **Chennai — 229K**
+
+Hyderabad also leads the restaurant engagement-efficiency view.
+
+The implication is important:
+
+> **A national menu strategy may leave market-specific opportunities unexplored.**
+
+Pricing, product launches, promotions and premium offerings should be adapted to local demand patterns.
+
+---
+
+### 06 — Restaurant Benchmarks Matter
+
+The restaurant leaderboard highlights high-performing local operators such as:
+
+- Bawarchi | Hyderabad
+- Lucky Restaurant | Hyderabad
+- Mehfil | Hyderabad
+- 4M Biryani House | Hyderabad
+- Zam Zam Restaurant | Kolkata
+
+These restaurants combine meaningful customer engagement with strong dining and delivery ratings.
+
+The analysis therefore treats high-performing local restaurants as potential **operational and portfolio benchmarks**, rather than relying only on broad national comparisons.
+
+---
+
+## 09 — Business Recommendations
+
+The analysis was translated into ten strategic recommendations.
+
+### Growth & Investment
+
+**1. Scale Proven Menu Winners**
+
+Prioritize Volume Drivers and Signature Products across additional restaurants and cities instead of expanding the menu indiscriminately.
+
+**2. Adopt a Dual Portfolio Growth Strategy**
+
+Use Volume Drivers to maximize reach while selectively investing in Premium Winners to strengthen premium positioning and profitability.
+
+**3. Position Hyderabad as an Innovation & Launch Market**
+
+Use Hyderabad as a pilot environment for new menu launches, premium offerings and promotional campaigns before broader rollout.
+
+### Portfolio Optimization
+
+**4. Rationalize the Dormant Portfolio**
+
+Review Dormant Core and Dormant Premium products for removal, redesign, repositioning or replacement.
+
+**5. Optimize Menus Around Customer Demand**
+
+Encourage focused menus built around proven products rather than continuous assortment expansion.
+
+**6. Institutionalize Continuous Portfolio Management**
+
+Use the Product Strategy framework as an ongoing management system, continuously monitoring and reclassifying products as customer demand changes.
+
+### Market Expansion
+
+**7. Replace National Standardization with Local Market Strategy**
+
+Adapt menu composition, pricing and promotion to city-specific customer behavior.
+
+**8. Expand Premium Where Demand Already Exists**
+
+Prioritize premium expansion in cities and categories where customer engagement demonstrates willingness to support higher-value products.
+
+### Operational Excellence
+
+**9. Build Stronger Partnerships with Local Restaurant Leaders**
+
+Use high-performing local restaurants as benchmarks and replicate successful practices where appropriate.
+
+**10. Protect Customer Experience as a Competitive Advantage**
+
+Maintain strong dining and delivery standards because the highest-engagement restaurants consistently demonstrate strong service quality.
+
+The broader strategic conclusion is:
+
+> **Zomato's growth opportunity is not simply to add more menu items. It is to manage the existing menu as a dynamic portfolio — continuously scaling winners, optimizing underperformers, selectively premiumizing, and adapting strategy to local demand.**
+
+---
+
+## 10 — Deliverables
+
+The repository contains the complete analytical project, not only the final dashboard.
 
 ```text
-Zomato-Menu-Intelligence-Portfolio-Strategy/
+zomato-menu-intelligence/
 │
 ├── README.md
-├── images/
-│   ├── 00_title_card.png
-│   ├── 01_project_hub.jpg
-│   ├── 02_menu_portfolio.jpg
-│   ├── 03_executive_action_plan.jpg
-│   └── 04_segmentation_framework.jpg
+│
+├── data/
+│   └── README.txt
+│
+├── deliverables/
+│   ├── dashboard_export.pdf
+│   └── executive_action_plan.pdf
 │
 ├── docs/
 │   ├── analytical_methodology.md
@@ -343,53 +635,72 @@ Zomato-Menu-Intelligence-Portfolio-Strategy/
 │   ├── report_architecture.md
 │   └── source_and_data.md
 │
-├── powerbi/
-│   ├── Zomato_Menu_Intelligence_Portfolio_Strategy.pbix
-│   └── README.md
+├── images/
+│   ├── 00_title_card.png
+│   ├── 01_project_hub.jpg
+│   ├── 02_menu_portfolio.jpg
+│   ├── 03_executive_action_plan.jpg
+│   └── 04_segmentation_framework.jpg
 │
-├── deliverables/
-│   ├── dashboard_export.pdf
-│   └── executive_action_plan.pdf
-│
-└── data/
-    └── README.txt
+└── powerbi/
+    ├── README.md
+    └── Zomato_Menu_Intelligence_Portfolio_Strategy.pbix
 ```
 
----
+The repository separates the project into four layers:
 
-## ■ Tools
+**Data → Documentation → Visual Assets → Power BI Deliverable**
 
-**Power BI Desktop · Power Query · DAX · Data Segmentation · Dashboard Design · Business Intelligence · Portfolio Analytics**
-
----
-
-## ■ Explore the Project
-
-**Live Power BI Dashboard**  
-https://app.powerbi.com/view?r=eyJrIjoiNjRkZTAwNzQtMGNkNi00NTFjLTg1YjEtOGI3NWZlMmEzZDcxIiwidCI6ImM2ZTU0OWIzLTVmNDUtNDAzMi1hYWU5LWQ0MjQ0ZGM1YzJjNCJ9
-
-**Dataset Source**  
-https://www.kaggle.com/datasets/narsingraogoud/zomato-restaurants-dataset-for-metropolitan-areas
+This keeps the repository useful both as a portfolio presentation and as a technical project record.
 
 ---
 
-## Author
+## 11 — Tools & Technologies
+
+| Tool | Role |
+|---|---|
+| **Power BI** | Data modeling, DAX, analysis and dashboard development |
+| **Power Query** | Data preparation and transformation |
+| **DAX** | KPI logic, calculated columns and portfolio segmentation |
+| **Git / GitHub** | Version control, project documentation and publication |
+| **Kaggle** | Source dataset |
+
+---
+
+## 12 — Author
 
 **Debanjan Biswas**  
-Data Analyst | Excel | Power BI | SQL | Python  
-Email: <bishwasdebanjan99@gmail.com>  
-LinkedIn: [linkedin.com/in/biswas-debanjan-2ab011148](https://www.linkedin.com/in/biswas-debanjan-2ab011148/)
+Data Analyst | Excel | Power BI | SQL | Python
 
-This project was developed as a practical Power BI and Data Analytics portfolio project, with a focus on turning hands-on technical work into a business-oriented analytical solution.
+Email: bishwasdebanjan99@gmail.com  
+LinkedIn: https://linkedin.com/in/biswas-debanjan-2ab011148
+
+This project was developed as a practical analytics portfolio project focused on turning hands-on Power BI work into a business-oriented analytical solution.
 
 ---
 
-## Project Direction
+## 13 — Project Perspective
 
-The purpose of this project was to move beyond a conventional restaurant or menu-performance dashboard.
+The purpose of this project was to move beyond a conventional restaurant or menu dashboard.
 
-The analysis connects **menu pricing, customer engagement, product popularity, restaurant performance, cuisine behavior and city-level differences** into one portfolio-management view.
+The analysis connects **price positioning, customer engagement, product popularity, portfolio segmentation, cuisine intelligence, restaurant performance and city-level demand** into one decision-oriented framework.
+
+The central idea is simple:
+
+> **A menu should not be managed as a list of products. It should be managed as a portfolio.**
+
+That means understanding where demand exists, identifying which products deserve investment, recognizing where premiumization is justified, and reducing attention on products that create complexity without meaningful customer engagement.
 
 The resulting decision chain is:
 
-> **Understand where customer engagement exists → determine how price positioning interacts with demand → classify products by strategic role → identify portfolio opportunities and inefficiencies → prioritize the right commercial action.**
+**Understand customer demand → classify portfolio position → identify opportunity → prioritize action → continuously manage the portfolio.**
+
+---
+
+## License & Data Note
+
+This repository contains the analytical model, documentation and project deliverables. The original Zomato dataset is not redistributed here.
+
+Dataset source:
+
+https://www.kaggle.com/datasets/narsingraogoud/zomato-restaurants-dataset-for-metropolitan-areas
